@@ -25,13 +25,13 @@
 main:
     movq $0, %r8    # r8 gets 0 here, will get total at end
     movq $0, %rdi   # rdi = 0
-    movq $hours, %rbx
-    movq $rates, %rcx
-    movq $salaries, %r13
+    movq $hours, %rbx   # rbx holds memory address for hours array
+    movq $rates, %rcx   # rcx holds memory address for rates array
+    movq $salaries, %r13    # r13 holds memory address for salaries array
 mainLoop: cmp n, %rdi   # i > n?
     jge endLoop
     cmp $40, (%rbx, %rdi, 8)    # if hours <= 40 
-    jg overTime                 # else go to overTime label
+    jg overTime                 # go to overTime label if hours > 40
     movq (%rbx, %rdi, 8), %rax
     imulq (%rcx, %rdi, 8)   # rax = hours[i]*rates[i]
     movq %rax, (%r13, %rdi, 8)  # salaries[i] = whats in rax
